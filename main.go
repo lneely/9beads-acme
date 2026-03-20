@@ -291,7 +291,7 @@ func handleTasksWindow(w *acme.Win) {
 					if len(mounts) == 0 {
 						w.Err("Select <mount> — no mounts available")
 					} else {
-						w.Err("Select <mount> — available: " + strings.Join(mounts, ", "))
+						w.Err("Select <mount> — available:\n" + strings.Join(mounts, "\n"))
 					}
 				}
 			case "Deferred":
