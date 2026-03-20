@@ -6,7 +6,7 @@ Acme frontend for beads task tracking.
 
 ```sh
 mk install
-9beads-acme
+Beads
 ```
 
 Requires 9beads server running.
