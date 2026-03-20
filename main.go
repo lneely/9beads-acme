@@ -30,8 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Block forever
-	select {}
+	<-tasksDone
 }
 
 func connectToBeads() (*client.Fsys, error) {
@@ -213,6 +212,8 @@ func applyBeadEdits(w *acme.Win, edits []beadEdit, beads *[]Bead, filter string,
 	refreshTasksWindowWithBeads(w, *beads, mount, filter)
 }
 
+var tasksDone = make(chan struct{})
+
 func openTasksWindow() error {
 	w, err := acme.New()
 	if err != nil {
@@ -226,6 +227,7 @@ func openTasksWindow() error {
 
 func handleTasksWindow(w *acme.Win) {
 	defer w.CloseFiles()
+	defer close(tasksDone)
 
 	var beads []Bead
 	filter := "all"
