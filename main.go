@@ -133,37 +133,37 @@ func parseBeadEdits(content string, beads []Bead) []beadEdit {
 		switch {
 		case strings.HasPrefix(line, "- "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "delete", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "c "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "claim", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "u "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "unclaim", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "o "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "open", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "d "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "defer", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "x "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "complete", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "f "):
 			rest := strings.TrimSpace(line[2:])
-			if idx := parseIndex(rest); idx > 0 && idx <= len(beads) {
+			if idx := parseIndex(strings.Fields(rest)[0]); idx > 0 && idx <= len(beads) {
 				edits = append(edits, beadEdit{action: "fail", beadID: beads[idx-1].ID})
 			}
 		case strings.HasPrefix(line, "+ "):
