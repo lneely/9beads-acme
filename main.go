@@ -747,8 +747,8 @@ func listMounts() []string {
 	}
 	var mounts []string
 	for _, line := range strings.Split(strings.TrimSpace(string(data)), "\n") {
-		if fields := strings.Fields(line); len(fields) > 0 {
-			mounts = append(mounts, fields[0])
+		if line = strings.TrimSpace(line); line != "" {
+			mounts = append(mounts, line)
 		}
 	}
 	return mounts
