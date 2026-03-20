@@ -284,6 +284,13 @@ func handleTasksWindow(w *acme.Win) {
 					windowMount = arg
 					beads, _ = listBeadsWithFilter(filter, windowMount)
 					refreshTasksWindowWithBeads(w, beads, windowMount, filter)
+				} else {
+					mounts := listMounts()
+					if len(mounts) == 0 {
+						w.Err("Select <mount> — no mounts available")
+					} else {
+						w.Err("Select <mount> — available: " + strings.Join(mounts, ", "))
+					}
 				}
 			case "Deferred":
 				filter = "deferred"
@@ -729,6 +736,20 @@ func updateBead(beadID, content string, origBlockers []string, mount string) err
 
 func initBeads(prefix string, mount string) error {
 	return writeBeadsFile(filepath.Join(mount, "ctl"), []byte(fmt.Sprintf("init %s", prefix)))
+}
+
+func listMounts() []string {
+	data, err := readBeadsFile("mtab")
+	if err != nil || len(data) == 0 {
+		return nil
+	}
+	var mounts []string
+	for _, line := range strings.Split(strings.TrimSpace(string(data)), "\n") {
+		if fields := strings.Fields(line); len(fields) > 0 {
+			mounts = append(mounts, fields[0])
+		}
+	}
+	return mounts
 }
 
 func mountProject(cwd string) (string, error) {
